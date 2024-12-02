@@ -6,7 +6,7 @@
 /*   By: zirtaee <zirtaee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:11:26 by zirtaee           #+#    #+#             */
-/*   Updated: 2024/12/02 17:18:04 by zirtaee          ###   ########.fr       */
+/*   Updated: 2024/12/02 17:36:10 by zirtaee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,14 @@ char    *get_next_line(int fd)
         if (!buffer[0])
         {
             bytes_count = read(fd, buffer, BUFFER_SIZE);
-            if (bytes_count <= 0)
-            {
-                ft_clean_buffer(buffer);
-                break;
-            }
+            if (bytes_count == 0)
+                return(result(line, buffer, ft_clean_buffer, 0));
+            if (bytes_count < 0)
+                return(result(line, buffer, ft_clean_buffer, 1));
         }
         line = ft_strjoin(line, buffer);
-        if (ft_strchr(buffer, '\n') && ft_clean_buffer(buffer))
-            break;
+        if (ft_strchr(buffer, '\n'))
+            return(result(line, buffer, ft_clean_buffer, 0));
         ft_clean_buffer(buffer);
     }
     return (line);

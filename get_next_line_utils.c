@@ -6,7 +6,7 @@
 /*   By: zirtaee <zirtaee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:10:59 by zirtaee           #+#    #+#             */
-/*   Updated: 2024/12/02 17:17:23 by zirtaee          ###   ########.fr       */
+/*   Updated: 2024/12/02 17:38:42 by zirtaee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,16 @@ char *ft_strjoin(char *s1, char const *s2)
 	if (s1)
 		free(s1);
 	return (res);
+}
+
+char *result(char *line, char *buffer, int(*f)(char *), int i)
+{
+	f(buffer);
+	if (i == 1)
+	{
+		if (line)
+			free(line);
+		return (NULL);
+	}
+	return (line);
 }
