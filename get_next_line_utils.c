@@ -6,25 +6,23 @@
 /*   By: zirtaee <zirtaee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:10:59 by zirtaee           #+#    #+#             */
-/*   Updated: 2024/12/02 17:38:42 by zirtaee          ###   ########.fr       */
+/*   Updated: 2024/12/02 18:31:34 by zirtaee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char     *ft_strchr(const char *s, int c)
+char     *ft_strchr(const char *s, int c, t_data data)
 {
-	int	i;
-
-	i = 0;
-	while (s[i])
+	data.i = 0;
+	while (s[data.i])
 	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
-		i++;
+		if (s[data.i] == (char)c)
+			return ((char *)&s[data.i]);
+		data.i++;
 	}
-	if (s[i] == (char)c)
-		return ((char *)&s[i]);
+	if (s[data.i] == (char)c)
+		return ((char *)&s[data.i]);
 	return (NULL);
 }
 
@@ -66,32 +64,27 @@ int	ft_clean_buffer(char buffer[BUFFER_SIZE + 1])
 	return(1);
 }
 
-char *ft_strjoin(char *s1, char const *s2)
+char *ft_strjoin(char *s1, char const *s2, t_data data)
 {
-	char			*res;
-	unsigned int	i;
-	unsigned int	j;
-	unsigned int	len;
-
-	len = ft_strlen(s1) + ft_strlen(s2);
-	res = (char *)malloc(sizeof(char) * len + 1);
-	if (!res)
+	data.len = ft_strlen(s1) + ft_strlen(s2);
+	data.res = (char *)malloc(sizeof(char) * data.len + 1);
+	if (!data.res)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1 && s1[i])
-		res[j++] = s1[i++];
-	i = 0;
-	while (s2 && s2[i])
+	data.i = 0;
+	data.j = 0;
+	while (s1 && s1[data.i])
+		data.res[data.j++] = s1[data.i++];
+	data.i = 0;
+	while (s2 && s2[data.i])
 	{
-    	res[j++] = s2[i++];
-        if (res[j - 1] == '\n')
+    	data.res[data.j++] = s2[data.i++];
+        if (data.res[data.j - 1] == '\n')
 			break;
     }
-	res[j] = '\0';
+	data.res[data.j] = '\0';
 	if (s1)
 		free(s1);
-	return (res);
+	return (data.res);
 }
 
 char *result(char *line, char *buffer, int(*f)(char *), int i)

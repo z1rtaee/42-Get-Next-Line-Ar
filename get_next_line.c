@@ -6,7 +6,7 @@
 /*   By: zirtaee <zirtaee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:11:26 by zirtaee           #+#    #+#             */
-/*   Updated: 2024/12/02 17:36:10 by zirtaee          ###   ########.fr       */
+/*   Updated: 2024/12/02 18:25:14 by zirtaee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,27 @@
 char    *get_next_line(int fd)
 {
     static char     buffer[BUFFER_SIZE + 1];
-    unsigned int    bytes_count;
-    char            *line;
+    t_data           data;
 
     if (fd < 0 || BUFFER_SIZE <= 0)
         return (NULL);
-    line = NULL;
+    data.line = NULL;
     while (1)
     {
         if (!buffer[0])
         {
-            bytes_count = read(fd, buffer, BUFFER_SIZE);
-            if (bytes_count == 0)
-                return(result(line, buffer, ft_clean_buffer, 0));
-            if (bytes_count < 0)
-                return(result(line, buffer, ft_clean_buffer, 1));
+            data.bytes_count = read(fd, buffer, BUFFER_SIZE);
+            if (data.bytes_count == 0)
+                return(result(data.line, buffer, ft_clean_buffer, 0));
+            if (data.bytes_count < 0)
+                return(result(data.line, buffer, ft_clean_buffer, 1));
         }
-        line = ft_strjoin(line, buffer);
-        if (ft_strchr(buffer, '\n'))
-            return(result(line, buffer, ft_clean_buffer, 0));
+        data.line = ft_strjoin(data.line, buffer, data);
+        if (ft_strchr(buffer, '\n', data))
+            return(result(data.line, buffer, ft_clean_buffer, 0));
         ft_clean_buffer(buffer);
     }
-    return (line);
+    return (data.line);
 }
 
 int	main(void)
