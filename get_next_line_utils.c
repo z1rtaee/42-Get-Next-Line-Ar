@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zirtaee <zirtaee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpires-r <bpires-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:10:59 by zirtaee           #+#    #+#             */
-/*   Updated: 2024/12/02 18:31:34 by zirtaee          ###   ########.fr       */
+/*   Updated: 2024/12/02 20:25:22 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char     *ft_strchr(const char *s, int c, t_data data)
+char	*ft_strchr(const char *s, int c, t_data data)
 {
 	data.i = 0;
 	while (s[data.i])
@@ -40,31 +40,27 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-int	ft_clean_buffer(char buffer[BUFFER_SIZE + 1])
+int	ft_clean_buffer(char buffer[BUFFER_SIZE + 1], t_data data)
 {
-	int i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	int check = 0;
-
-	while(i < BUFFER_SIZE)
+	data.i = 0;
+	data.j = 0;
+	data.check = 0;
+	while (data.i < BUFFER_SIZE)
 	{
-		if(check)
+		if (data.check)
 		{
-			buffer[j] = buffer[i];
-			j++;
+			buffer[data.j] = buffer[data.i];
+			data.j++;
 		}
-		if(buffer[i] == '\n')
-			check = 1;
-		buffer[i] = '\0';
-		i++;
+		if (buffer[data.i] == '\n')
+			data.check = 1;
+		buffer[data.i] = '\0';
+		data.i++;
 	}
-	return(1);
+	return (1);
 }
 
-char *ft_strjoin(char *s1, char const *s2, t_data data)
+char	*ft_strjoin(char *s1, char const *s2, t_data data)
 {
 	data.len = ft_strlen(s1) + ft_strlen(s2);
 	data.res = (char *)malloc(sizeof(char) * data.len + 1);
@@ -77,24 +73,24 @@ char *ft_strjoin(char *s1, char const *s2, t_data data)
 	data.i = 0;
 	while (s2 && s2[data.i])
 	{
-    	data.res[data.j++] = s2[data.i++];
-        if (data.res[data.j - 1] == '\n')
-			break;
-    }
+		data.res[data.j++] = s2[data.i++];
+		if (data.res[data.j - 1] == '\n')
+			break ;
+	}
 	data.res[data.j] = '\0';
 	if (s1)
 		free(s1);
 	return (data.res);
 }
 
-char *result(char *line, char *buffer, int(*f)(char *), int i)
+char	*result(t_data data, char *buffer, int (*f)(char *, t_data), int i)
 {
-	f(buffer);
+	f(buffer, data);
 	if (i == 1)
 	{
-		if (line)
-			free(line);
+		if (data.line)
+			free(data.line);
 		return (NULL);
 	}
-	return (line);
+	return (data.line);
 }
