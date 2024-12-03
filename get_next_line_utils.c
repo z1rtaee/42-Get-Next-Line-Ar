@@ -6,7 +6,7 @@
 /*   By: bpires-r <bpires-r@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:10:59 by zirtaee           #+#    #+#             */
-/*   Updated: 2024/12/02 20:25:22 by bpires-r         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:03:28 by bpires-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_clean_buffer(char buffer[BUFFER_SIZE + 1], t_data data)
 char	*ft_strjoin(char *s1, char const *s2, t_data data)
 {
 	data.len = ft_strlen(s1) + ft_strlen(s2);
-	data.res = (char *)malloc(sizeof(char) * data.len + 1);
+	data.res = (char *)malloc(sizeof(char) * (data.len + 1));
 	if (!data.res)
 		return (NULL);
 	data.i = 0;
